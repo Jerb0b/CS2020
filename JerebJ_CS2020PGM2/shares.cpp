@@ -19,9 +19,9 @@ const int numShareHolders = 27;
 
 // Structure of the "Shareholder" we will need for the vector
 struct Shareholder {
-	string name;
-	string category;
-	int shares;
+	string name = "Bob Smith";
+	string category = "Undefined";
+	int shares = 0;
 };
 
 // Function Prototypes
@@ -33,8 +33,7 @@ void breakdown(vector <Shareholder> ClientsList);
 int main() {
 	
 	// Declared variables and vectors
-	vector <Shareholder> ClientsList;
-	ClientsList.resize(numShareHolders);
+	vector<Shareholder> ClientsList;
 
 	// Call to the functions
 	fillvector(ClientsList);
@@ -53,6 +52,30 @@ int main() {
 
 void fillvector(vector <Shareholder>& ClientsList) {
 	cout << "INSERT FILLER VECTOR HERE" << endl;
+	ifstream infile;
+	int numclients = 0;
+	string tempstr = "undefined string";
+
+	infile.open("shares.txt");
+	if (!infile)
+	{
+		cerr << "Error" << endl;
+	}
+
+	//We will now run a loop to get al of the data from the file and assign it to the proper vector
+	while (!infile.fail()){
+			Shareholder temp;
+			if (numclients >= 1) {
+				infile.ignore();
+			}
+			getline(infile, temp.name);
+			getline(infile, temp.category);
+			infile >> temp.shares;
+			ClientsList.push_back(temp);
+			numclients++;
+	}
+	ClientsList.resize(27);
+	infile.close();
 }
 
 //************************************************************************************
